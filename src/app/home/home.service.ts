@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { SUPPORTED_FILE } from './home.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -35,10 +36,10 @@ export class HomeService {
   }
   //check etension
   isValidCSVFile(file: any) {
-    return file.name.endsWith('.csv');
+    return file.name.endsWith(SUPPORTED_FILE.CSV);
   }
   isValidXMLFile(file: any) {
-    return file.name.endsWith('.xml');
+    return file.name.endsWith(SUPPORTED_FILE.XML);
   }
   camelize(text: any) {
     return text.substr(0, 1).toLowerCase() + text.substr(1);

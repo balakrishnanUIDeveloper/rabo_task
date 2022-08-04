@@ -1,7 +1,7 @@
 <ng-container
   >\
   <div class="card">
-    <div class="card-header">Upload csv to read</div>
+    <div class="card-header">{{ title }}</div>
     <div class="card-body">
       <input
         type="file"
@@ -13,8 +13,12 @@
       />
     </div>
   </div>
-  <button type="button" (click)="fileReset()" class="btn btn-primary mb-3 mt-2">
+  <button
+    type="button"
+    *ngIf="records.length > 0"
+    (click)="fileReset()"
+    class="btn btn-primary mb-3 mt-2"
+  >
     Reset
   </button>
 </ng-container>
-<!-- " *ngIf="records.length > 0" -->

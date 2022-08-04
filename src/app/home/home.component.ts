@@ -1,5 +1,6 @@
 import { Component, VERSION, ViewChild, OnInit } from '@angular/core';
 import * as xml2js from 'xml2js';
+import { APPTITLE, RECORDS_EVENT } from './home.constants';
 import { HomeService } from './home.service';
 
 export type AccountSData = {
@@ -17,11 +18,11 @@ export type AccountSData = {
 })
 export class HomeComponent implements OnInit {
   public records: AccountSData[] = [];
-
+  title = APPTITLE;
   constructor(private homeService: HomeService) {}
   ngOnInit(): void {
     this.homeService.recordSubject.subscribe((data) => {
-      if (data === 'reset') {
+      if (data === RECORDS_EVENT.RESET) {
         this.fileReset();
       }
     });
@@ -71,5 +72,10 @@ export class HomeComponent implements OnInit {
 
   fileReset() {
     this.records = [];
+  }
+
+  checkTransactionStatus(record: AccountSData) {
+    const endBalance = Number(record.startBalance) + Number(record.mutation);
+    return endBalance.toString() === record.endBalance;
   }
 }

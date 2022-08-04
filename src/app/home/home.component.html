@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col text-center">
-      <h1>Rabobank Customer Statement Processor</h1>
+      <h1>{{ title }}</h1>
     </div>
   </div>
   <div class="row justify-content-center">
@@ -22,6 +22,7 @@
           <th scope="col">startBalance</th>
           <th scope="col">mutation</th>
           <th scope="col">endBalance</th>
+          <th scope="col">Transaction Status</th>
         </tr>
       </thead>
       <tbody>
@@ -32,6 +33,7 @@
           <td>{{ record.startBalance }}</td>
           <td>{{ record.mutation }}</td>
           <td>{{ record.endBalance }}</td>
+          <td>{{ checkTransactionStatus(record) }}</td>
         </tr>
       </tbody>
     </table>
