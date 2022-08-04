@@ -11,12 +11,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './core/services/api.service';
 import { HomeComponent } from './home/home.component';
 import { HomeService } from './home/home.service';
+import { DataProcessorComponent } from './home/data-processor/data-processor.component';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    DataProcessorComponent
   ],
   imports: [
     BrowserModule,

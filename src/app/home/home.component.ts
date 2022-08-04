@@ -1,7 +1,8 @@
-import { Component, VERSION, ViewChild } from '@angular/core';
+import { Component, VERSION, ViewChild, OnInit } from '@angular/core';
 import * as xml2js from 'xml2js';
 import { HomeService } from './home.service';
-type AccountSData = {
+
+export type AccountSData = {
   reference: String;
   accountNumber: String;
   description: String;
@@ -9,15 +10,22 @@ type AccountSData = {
   mutation: String;
   endBalance: String;
 };
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent {
-  name = 'Angular ' + VERSION.major;
+export class HomeComponent implements OnInit {
   public records: AccountSData[] = [];
-  @ViewChild('csvReader') csvReader: any;
+
   constructor(private homeService: HomeService) {}
+  ngOnInit(): void {
+    this.homeService.recordSubject.subscribe((data) => {
+      if (data === 'reset') {
+        this.fileReset();
+      }
+    });
+  }
 
   uploadListener($event: any): void {
     let files = $event.srcElement.files;
@@ -28,7 +36,7 @@ export class HomeComponent {
       reader.onload = () => {
         let csvData = reader.result;
         let csvRecordsArray = csvData?.toString().split(/\r\n|\n/);
-        let headersRow = this.getHeaderArray(csvRecordsArray);
+        let headersRow = this.homeService.getHeaderArray(csvRecordsArray);
         this.records = this.homeService.getDataRecordsArrayFromCSVFile(
           csvRecordsArray,
           headersRow.length
@@ -48,7 +56,7 @@ export class HomeComponent {
     }
   }
 
-  async getDataRecordsArrayFromXMLFile(xml: any) {
+  getDataRecordsArrayFromXMLFile(xml: any) {
     const parser = new xml2js.Parser({
       trim: true,
       explicitArray: false,
@@ -61,17 +69,7 @@ export class HomeComponent {
     });
   }
 
-  getHeaderArray(csvRecordsArr: any) {
-    let headers = csvRecordsArr[0].split(',');
-    let headerArray = [];
-    for (let j = 0; j < headers.length; j++) {
-      headerArray.push(headers[j]);
-    }
-    return headerArray;
-  }
-
   fileReset() {
-    this.csvReader.nativeElement.value = '';
     this.records = [];
   }
 }

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
   constructor() {}
+  recordSubject = new Subject();
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     let csvArr = [];
 
@@ -22,6 +24,14 @@ export class HomeService {
       }
     }
     return csvArr;
+  }
+  getHeaderArray(csvRecordsArr: any) {
+    let headers = csvRecordsArr[0].split(',');
+    let headerArray = [];
+    for (let j = 0; j < headers.length; j++) {
+      headerArray.push(headers[j]);
+    }
+    return headerArray;
   }
   //check etension
   isValidCSVFile(file: any) {

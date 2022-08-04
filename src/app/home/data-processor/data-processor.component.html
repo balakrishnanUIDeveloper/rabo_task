@@ -1,0 +1,20 @@
+<ng-container
+  >\
+  <div class="card">
+    <div class="card-header">Upload csv to read</div>
+    <div class="card-body">
+      <input
+        type="file"
+        #csvReader
+        name="Upload CSV or XML"
+        id="txtFileUpload"
+        (change)="uploadListener($event)"
+        accept=".csv, .xml"
+      />
+    </div>
+  </div>
+  <button type="button" (click)="fileReset()" class="btn btn-primary mb-3 mt-2">
+    Reset
+  </button>
+</ng-container>
+<!-- " *ngIf="records.length > 0" -->
