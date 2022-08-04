@@ -21,10 +21,16 @@
         "@angular/platform-browser": "^14.0.0",
         "@angular/platform-browser-dynamic": "^14.0.0",
         "@angular/router": "^14.0.0",
+        "@types/xml2js": "^0.4.11",
         "bootstrap": "^4.6.0",
         "rxjs": "~7.5.0",
+        "stream": "^0.0.2",
+        "timers": "^0.1.1",
         "tslib": "^2.3.0",
-        "zone.js": "~0.11.4"
+        "xml2js": "^0.4.23",
+        "xml2json": "^0.12.0",
+        "zone.js": "~0.11.4",
+        "ngx-xml2json": "1.0.2"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "^14.0.3",
@@ -36,6 +42,7 @@
         "@angular/cli": "~14.0.3",
         "@angular/compiler-cli": "^14.0.0",
         "@types/jasmine": "~4.0.0",
+        "@types/xml2json": "^0.11.4",
         "@typescript-eslint/eslint-plugin": "5.29.0",
         "@typescript-eslint/parser": "5.29.0",
         "eslint": "^8.18.0",
