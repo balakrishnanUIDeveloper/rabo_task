@@ -9,8 +9,8 @@ import { routes } from './app.route';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './core/services/api.service';
-import { AppService } from './app.service';
 import { HomeComponent } from './home/home.component';
+import { HomeService } from './home/home.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule
   ],
   exports: [RouterModule],
-  providers: [ApiService, AppService],
+  providers: [ApiService, HomeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

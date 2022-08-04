@@ -1,5 +1,6 @@
 import { Component, VERSION, ViewChild } from '@angular/core';
 import * as xml2js from 'xml2js';
+import { HomeService } from './home.service';
 type AccountSData = {
   reference: String;
   accountNumber: String;
@@ -16,20 +17,19 @@ export class HomeComponent {
   name = 'Angular ' + VERSION.major;
   public records: AccountSData[] = [];
   @ViewChild('csvReader') csvReader: any;
+  constructor(private homeService: HomeService) {}
 
   uploadListener($event: any): void {
-    let text = [];
     let files = $event.srcElement.files;
     let input = $event.target;
     let reader = new FileReader();
     reader.readAsText(input.files[0]);
-    if (this.isValidCSVFile(files[0])) {
+    if (this.homeService.isValidCSVFile(files[0])) {
       reader.onload = () => {
         let csvData = reader.result;
         let csvRecordsArray = csvData?.toString().split(/\r\n|\n/);
-
         let headersRow = this.getHeaderArray(csvRecordsArray);
-        this.records = this.getDataRecordsArrayFromCSVFile(
+        this.records = this.homeService.getDataRecordsArrayFromCSVFile(
           csvRecordsArray,
           headersRow.length
         );
@@ -37,59 +37,28 @@ export class HomeComponent {
       reader.onerror = function () {
         console.log('error is occured while reading file!');
       };
-    } else if (this.isValidXMLFile(files[0])) {
+    } else if (this.homeService.isValidXMLFile(files[0])) {
       reader.onload = () => {
         let xmlData = reader.result;
-        this.parseXmlToJson(xmlData);
+        this.getDataRecordsArrayFromXMLFile(xmlData);
       };
     } else {
-      alert('Please import valid .csv file.');
+      alert('Please import valid .csv or .xml file.');
       this.fileReset();
     }
   }
-  camelize(text: any) {
-    // text = text.replace(/[-_\s.]+(.)?/g);
-    return text.substr(0, 1).toLowerCase() + text.substr(1);
-  }
 
-  async parseXmlToJson(xml: any) {
+  async getDataRecordsArrayFromXMLFile(xml: any) {
     const parser = new xml2js.Parser({
       trim: true,
       explicitArray: false,
       mergeAttrs: true,
-      attrNameProcessors: [this.camelize],
-      tagNameProcessors: [this.camelize]
+      attrNameProcessors: [this.homeService.camelize],
+      tagNameProcessors: [this.homeService.camelize]
     });
     parser.parseString(xml, (err, result) => {
-      console.log(result);
       this.records = result?.records?.record;
     });
-  }
-  getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
-    let csvArr = [];
-
-    for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = csvRecordsArray[i].split(',');
-      if (curruntRecord.length == headerLength) {
-        let csvRecord: any = {};
-        csvRecord.reference = curruntRecord[0].trim();
-        csvRecord.accountNumber = curruntRecord[1].trim();
-        csvRecord.description = curruntRecord[2].trim();
-        csvRecord.startBalance = curruntRecord[3].trim();
-        csvRecord.mutation = curruntRecord[4].trim();
-        csvRecord.endBalance = curruntRecord[5].trim();
-        csvArr.push(csvRecord);
-      }
-    }
-    return csvArr;
-  }
-
-  //check etension
-  isValidCSVFile(file: any) {
-    return file.name.endsWith('.csv');
-  }
-  isValidXMLFile(file: any) {
-    return file.name.endsWith('.xml');
   }
 
   getHeaderArray(csvRecordsArr: any) {
