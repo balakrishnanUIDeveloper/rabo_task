@@ -19,4 +19,4 @@ export const PROCESSOR_TITLE = 'Upload CSV / XML to read';
 export const TAB_TITLE = {
   SUCCESS: 'Success',
   FAILURE: 'Failure'
-}
+};
