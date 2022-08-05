@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccountSData } from '../home.component';
+import { TAB_TITLE } from '../home.constants';
 
 @Component({
   selector: 'app-records',
@@ -12,11 +13,11 @@ export class RecordsComponent implements OnInit {
   showSuccessRecords: Boolean = true;
   tabs = [
     {
-      title: 'Success',
+      title: TAB_TITLE.SUCCESS,
       active: true
     },
     {
-      title: 'Failure',
+      title: TAB_TITLE.FAILURE,
       active: false
     }
   ];
@@ -33,6 +34,6 @@ export class RecordsComponent implements OnInit {
   selectTab(tab: any) {
     this.tabs.forEach((tab) => (tab.active = false));
     tab.active = true;
-    this.showSuccessRecords = tab.title === 'Success';
+    this.showSuccessRecords = tab.title === TAB_TITLE.SUCCESS;
   }
 }

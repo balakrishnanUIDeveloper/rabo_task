@@ -15,3 +15,8 @@ export const SUPPORTED_FILE = {
 };
 export const APPTITLE = 'Rabobank Customer Statement Processor';
 export const PROCESSOR_TITLE = 'Upload CSV / XML to read';
+
+export const TAB_TITLE = {
+  SUCCESS: 'Success',
+  FAILURE: 'Failure'
+}
