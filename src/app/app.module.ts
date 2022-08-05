@@ -8,26 +8,30 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app.route';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ApiService } from './core/services/api.service';
 import { HomeComponent } from './home/home.component';
 import { HomeService } from './home/home.service';
 import { DataProcessorComponent } from './home/data-processor/data-processor.component';
+import { ModalComponent } from './shared/modal/modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalService } from './shared/modal/modal.service';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     NotFoundComponent,
     HomeComponent,
-    DataProcessorComponent
+    DataProcessorComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   exports: [RouterModule],
-  providers: [ApiService, HomeService],
+  providers: [HomeService, ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

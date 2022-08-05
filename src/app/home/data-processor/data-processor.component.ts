@@ -9,7 +9,7 @@ import { AccountSData } from '../home.component';
 import { PROCESSOR_TITLE, RECORDS_EVENT } from '../home.constants';
 import { HomeService } from '../home.service';
 @Component({
-  selector: 'data-processor',
+  selector: 'app-data-processor',
   templateUrl: './data-processor.component.html'
 })
 export class DataProcessorComponent {
@@ -24,6 +24,6 @@ export class DataProcessorComponent {
   }
   fileReset() {
     this.csvReader.nativeElement.value = '';
-    this.homeService.recordSubject.next(RECORDS_EVENT.RESET);
+    this.homeService.recordSubject.next({ status: RECORDS_EVENT.RESET });
   }
 }

@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SUPPORTED_FILE } from './home.constants';
-
+import { AccountSData } from './home.component';
+import { RECORDS_EVENT, SUPPORTED_FILE } from './home.constants';
+import * as xml2js from 'xml2js';
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
   constructor() {}
   recordSubject = new Subject();
-  getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
+
+  getDataRecordsArrayFromCSVFile(csvData: any) {
+    let csvRecordsArray = csvData?.toString().split(/\r\n|\n/);
+    let headerLength = this.getHeaderArray(csvRecordsArray).length;
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
@@ -24,7 +28,29 @@ export class HomeService {
         csvArr.push(csvRecord);
       }
     }
-    return csvArr;
+    this.populateRecords(csvArr);
+  }
+
+  getDataRecordsArrayFromXMLFile(xmlData: any) {
+    const parser = new xml2js.Parser({
+      trim: true,
+      explicitArray: false,
+      mergeAttrs: true,
+      attrNameProcessors: [this.camelize],
+      tagNameProcessors: [this.camelize]
+    });
+    parser.parseString(xmlData, (err, result) => {
+      this.populateRecords(result?.records?.record);
+    });
+  }
+
+  checkRecordsDataFromFile(format: String, fileData: any) {
+    if (this.isValidCSVFile(format)) {
+      this.getDataRecordsArrayFromCSVFile(fileData);
+    }
+    if (this.isValidXMLFile(format)) {
+      this.getDataRecordsArrayFromXMLFile(fileData);
+    }
   }
   getHeaderArray(csvRecordsArr: any) {
     let headers = csvRecordsArr[0].split(',');
@@ -33,6 +59,13 @@ export class HomeService {
       headerArray.push(headers[j]);
     }
     return headerArray;
+  }
+
+  populateRecords(records: AccountSData[]) {
+    this.recordSubject.next({
+      status: RECORDS_EVENT.INITIATE_RECORDS,
+      records: records
+    });
   }
   //check etension
   isValidCSVFile(file: any) {

@@ -1,5 +1,11 @@
-import { Component, VERSION, ViewChild, OnInit } from '@angular/core';
-import * as xml2js from 'xml2js';
+import {
+  Component,
+  VERSION,
+  ViewChild,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
+import { ModalService } from '../shared/modal/modal.service';
 import { APPTITLE, RECORDS_EVENT } from './home.constants';
 import { HomeService } from './home.service';
 
@@ -16,14 +22,20 @@ export type AccountSData = {
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   public records: AccountSData[] = [];
   title = APPTITLE;
-  constructor(private homeService: HomeService) {}
+  constructor(
+    private homeService: HomeService,
+    private modalPopService: ModalService
+  ) {}
   ngOnInit(): void {
-    this.homeService.recordSubject.subscribe((data) => {
-      if (data === RECORDS_EVENT.RESET) {
+    this.homeService.recordSubject.subscribe((data: any) => {
+      if (data.status === RECORDS_EVENT.RESET) {
         this.fileReset();
+      }
+      if (data.status === RECORDS_EVENT.INITIATE_RECORDS) {
+        this.records = data.records;
       }
     });
   }
@@ -33,41 +45,25 @@ export class HomeComponent implements OnInit {
     let input = $event.target;
     let reader = new FileReader();
     reader.readAsText(input.files[0]);
-    if (this.homeService.isValidCSVFile(files[0])) {
+    if (
+      this.homeService.isValidCSVFile(files[0]) ||
+      this.homeService.isValidXMLFile(files[0])
+    ) {
+      let instance = this;
       reader.onload = () => {
-        let csvData = reader.result;
-        let csvRecordsArray = csvData?.toString().split(/\r\n|\n/);
-        let headersRow = this.homeService.getHeaderArray(csvRecordsArray);
-        this.records = this.homeService.getDataRecordsArrayFromCSVFile(
-          csvRecordsArray,
-          headersRow.length
-        );
+        this.homeService.checkRecordsDataFromFile(files[0], reader.result);
       };
       reader.onerror = function () {
-        console.log('error is occured while reading file!');
-      };
-    } else if (this.homeService.isValidXMLFile(files[0])) {
-      reader.onload = () => {
-        let xmlData = reader.result;
-        this.getDataRecordsArrayFromXMLFile(xmlData);
+        instance.modalPopService.modalPopupSubject.next({
+          status: RECORDS_EVENT.UPLOAD_ERROR
+        });
       };
     } else {
-      alert('Please import valid .csv or .xml file.');
+      this.modalPopService.modalPopupSubject.next({
+        status: RECORDS_EVENT.INVALID_FILE_ERROR
+      });
       this.fileReset();
     }
-  }
-
-  getDataRecordsArrayFromXMLFile(xml: any) {
-    const parser = new xml2js.Parser({
-      trim: true,
-      explicitArray: false,
-      mergeAttrs: true,
-      attrNameProcessors: [this.homeService.camelize],
-      tagNameProcessors: [this.homeService.camelize]
-    });
-    parser.parseString(xml, (err, result) => {
-      this.records = result?.records?.record;
-    });
   }
 
   fileReset() {
@@ -77,5 +73,8 @@ export class HomeComponent implements OnInit {
   checkTransactionStatus(record: AccountSData) {
     const endBalance = Number(record.startBalance) + Number(record.mutation);
     return endBalance.toString() === record.endBalance;
+  }
+  ngOnDestroy() {
+    this.homeService.recordSubject.unsubscribe();
   }
 }
