@@ -14,6 +14,7 @@ import { DataProcessorComponent } from './home/data-processor/data-processor.com
 import { ModalComponent } from './shared/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from './shared/modal/modal.service';
+import { RecordsComponent } from './home/records/records.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import { ModalService } from './shared/modal/modal.service';
     NotFoundComponent,
     HomeComponent,
     DataProcessorComponent,
-    ModalComponent
+    ModalComponent,
+    RecordsComponent
   ],
   imports: [
     BrowserModule,

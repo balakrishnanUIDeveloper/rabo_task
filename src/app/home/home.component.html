@@ -12,31 +12,14 @@
       ></app-data-processor>
     </div>
   </div>
-  <div class="row">
-    <table class="table" *ngIf="records.length > 0">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">reference</th>
-          <th scope="col">accountNumber</th>
-          <th scope="col">description</th>
-          <th scope="col">startBalance</th>
-          <th scope="col">mutation</th>
-          <th scope="col">endBalance</th>
-          <th scope="col">Transaction Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let record of records; let i = index">
-          <th scope="row">{{ record.reference }}</th>
-          <td>{{ record.accountNumber }}</td>
-          <td>{{ record.description }}</td>
-          <td>{{ record.startBalance }}</td>
-          <td>{{ record.mutation }}</td>
-          <td>{{ record.endBalance }}</td>
-          <td>{{ checkTransactionStatus(record) }}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="row mt-4 mb-4">
+    <div class="col-md-12">
+      <app-records
+        [records]="records"
+        [duplicateReferenceIDs]="duplicateReferenceIDs"
+        *ngIf="records.length > 0"
+      ></app-records>
+    </div>
   </div>
   <app-modal></app-modal>
 </div>
