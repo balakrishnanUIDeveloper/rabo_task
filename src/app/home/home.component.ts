@@ -25,6 +25,7 @@ export type AccountSData = {
 export class HomeComponent implements OnInit, OnDestroy {
   public records: AccountSData[] = [];
   title = APPTITLE;
+  duplicateReferenceIDs: String[] = [];
   constructor(
     private homeService: HomeService,
     private modalPopService: ModalService
@@ -36,10 +37,19 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       if (data.status === RECORDS_EVENT.INITIATE_RECORDS) {
         this.records = data.records;
+        this.getDuplicateRecord(data.records);
       }
     });
   }
-
+  getDuplicateRecord(records: AccountSData[]) {
+    this.duplicateReferenceIDs = records
+      .map((v) => v.reference)
+      .filter((refId, index, allRefIds) => {
+        console.log(refId, index, allRefIds);
+        return allRefIds.indexOf(refId) !== index;
+      });
+    console.log(this.duplicateReferenceIDs);
+  }
   uploadListener($event: any): void {
     let files = $event.srcElement.files;
     let input = $event.target;
@@ -72,7 +82,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   checkTransactionStatus(record: AccountSData) {
     const endBalance = Number(record.startBalance) + Number(record.mutation);
-    return endBalance.toString() === record.endBalance;
+    return (
+      endBalance.toString() === record.endBalance &&
+      !this.duplicateReferenceIDs.includes(record.reference)
+    );
   }
   ngOnDestroy() {
     this.homeService.recordSubject.unsubscribe();
