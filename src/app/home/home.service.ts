@@ -7,7 +7,6 @@ import * as xml2js from 'xml2js';
   providedIn: 'root'
 })
 export class HomeService {
-  constructor() {}
   recordSubject = new Subject();
 
   getDataRecordsArrayFromCSVFile(csvData: any) {

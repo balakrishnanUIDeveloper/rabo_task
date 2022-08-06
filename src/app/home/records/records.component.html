@@ -2,7 +2,11 @@
   <div class="col-md-12">
     <ul class="nav nav-tabs nav-fill">
       <li class="nav-item" *ngFor="let tab of tabs" (click)="selectTab(tab)">
-        <a class="nav-link" [class.active]="tab.active" href="#">
+        <a
+          class="nav-link"
+          [class.active]="tab.active"
+          href="javascript:void(0)"
+        >
           {{ tab.title }}
         </a>
       </li>

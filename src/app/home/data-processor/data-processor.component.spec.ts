@@ -35,25 +35,28 @@ describe('DataProcessorComponent', () => {
     const fakeFaileData = new DataTransfer();
     fakeFaileData.items.add(new File([''], 'test-file.csv'));
     spyOn(component.uploadFileEvent, 'emit');
-    const fileUploadEl = fixture.nativeElement.querySelector('input[type=file]')
+    const fileUploadEl =
+      fixture.nativeElement.querySelector('input[type=file]');
     fileUploadEl.files = fakeFaileData.files;
     fileUploadEl.dispatchEvent(new InputEvent('change'));
     fixture.detectChanges();
     expect(component.uploadFileEvent.emit).toHaveBeenCalled();
   });
-  it('should reset input element and emit event to parent', ()=>{
-    component.records = [{
-      reference: '156108',
-      accountNumber: 'NL69ABNA0433647324',
-      description: 'Flowers from Erik de Vries',
-      startBalance: '13.92',
-      mutation: '-7.25',
-      endBalance: '6.67'
-    }];
+  it('should reset input element and emit event to parent', () => {
+    component.records = [
+      {
+        reference: '156108',
+        accountNumber: 'NL69ABNA0433647324',
+        description: 'Flowers from Erik de Vries',
+        startBalance: '13.92',
+        mutation: '-7.25',
+        endBalance: '6.67'
+      }
+    ];
     fixture.detectChanges();
-    const resetBtnEl = fixture.nativeElement.querySelector('button')
+    const resetBtnEl = fixture.nativeElement.querySelector('button');
     resetBtnEl.dispatchEvent(new Event('click'));
     fixture.detectChanges();
-    expect(component.csvReader.nativeElement.value).toEqual('')
-  })
+    expect(component.csvReader.nativeElement.value).toEqual('');
+  });
 });

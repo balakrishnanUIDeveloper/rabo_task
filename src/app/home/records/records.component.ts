@@ -7,7 +7,7 @@ import { TAB_TITLE } from '../home.constants';
   templateUrl: './records.component.html',
   styleUrls: ['./records.component.scss']
 })
-export class RecordsComponent implements OnInit {
+export class RecordsComponent {
   @Input() records: AccountSData[] = [];
   @Input() duplicateReferenceIDs: String[] = [];
   showSuccessRecords: Boolean = true;
@@ -21,9 +21,6 @@ export class RecordsComponent implements OnInit {
       active: false
     }
   ];
-  constructor() {}
-
-  ngOnInit(): void {}
   checkTransactionStatus(record: AccountSData) {
     const endBalance = Number(record.startBalance) + Number(record.mutation);
     return (
