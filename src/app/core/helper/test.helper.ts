@@ -10,7 +10,7 @@ export function testCsvFileData() {
   \n112806,NL93ABNA0585619023,Subscription from Rik Theu�,77.29,-23.99,53.3\r`;
 }
 export function testXMLData() {
-  return `'<records>\n  <record reference="164702">\n    
+  return `<records>\n  <record reference="164702">\n    
     <accountNumber>NL46ABNA0625805417</accountNumber>\n
-    <description>Flowers for Rik Dekker</description>\n </record>\n</records>'`;
+    <description>Flowers for Rik Dekker</description>\n </record>\n</records>`;
 }
