@@ -15,6 +15,7 @@
  * SonarQube scan: 
 
 ## Scope for betterment
+
 * JenkinsFile for CI/ CD pipeline.
 
 ## Development server

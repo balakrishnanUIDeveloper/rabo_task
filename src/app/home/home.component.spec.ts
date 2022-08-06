@@ -3,7 +3,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ModalService } from '../shared/modal/modal.service';
 import { HomeService } from './home.service';
 import { APPTITLE, RECORDS_EVENT, SUPPORTED_FILE } from './home.constants';
-import { HomeComponent } from './home.component';
+import { AccountSData, HomeComponent } from './home.component';
 import { DataProcessorComponent } from './data-processor/data-processor.component';
 import { By } from '@angular/platform-browser';
 import { fakeFileForTest } from '../core/helper/test.helper';
@@ -12,6 +12,24 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let homeServiceStub: HomeService;
+  let subscriptionRecords: AccountSData[] = [
+    {
+      reference: '156108',
+      accountNumber: 'NL69ABNA0433647324',
+      description: 'Flowers from Erik de Vries',
+      startBalance: '13.92',
+      mutation: '-7.25',
+      endBalance: '6.67'
+    },
+    {
+      reference: '156108',
+      accountNumber: 'NL69ABNA0433647324',
+      description: 'Flowers from Erik de Vries',
+      startBalance: '13.92',
+      mutation: '-7.25',
+      endBalance: '6.67'
+    }
+  ];
   beforeEach(() => {
     const modalServiceStub = () => ({
       modalPopupSubject: { next: () => ({}) }
@@ -21,24 +39,7 @@ describe('HomeComponent', () => {
         subscribe: (f: any) =>
           f({
             status: RECORDS_EVENT.INITIATE_RECORDS,
-            records: [
-              {
-                reference: '156108',
-                accountNumber: 'NL69ABNA0433647324',
-                description: 'Flowers from Erik de Vries',
-                startBalance: '13.92',
-                mutation: '-7.25',
-                endBalance: '6.67'
-              },
-              {
-                reference: '156108',
-                accountNumber: 'NL69ABNA0433647324',
-                description: 'Flowers from Erik de Vries',
-                startBalance: '13.92',
-                mutation: '-7.25',
-                endBalance: '6.67'
-              }
-            ]
+            records: subscriptionRecords
           }),
         unsubscribe: () => ({})
       },
@@ -54,11 +55,9 @@ describe('HomeComponent', () => {
         { provide: HomeService, useFactory: homeServiceStub }
       ]
     });
-  });
-  beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
     component = fixture.componentInstance;
-    homeServiceStub = fixture.debugElement.injector.get(HomeService);
   });
 
   it('can load instance', () => {
@@ -66,15 +65,11 @@ describe('HomeComponent', () => {
   });
 
   it(`records has default value`, () => {
-    expect(component.records).toEqual([]);
+    expect(component.records).toEqual(subscriptionRecords);
   });
 
   it(`title has default value`, () => {
     expect(component.title).toEqual(APPTITLE);
-  });
-
-  it(`duplicateReferenceIDs has default value`, () => {
-    expect(component.duplicateReferenceIDs).toEqual([]);
   });
 
   describe('ngOnInit', () => {
@@ -85,6 +80,7 @@ describe('HomeComponent', () => {
       expect(component.records.length).toBeGreaterThan(0);
     });
     it('check duplicate data', () => {
+      fixture.detectChanges();
       spyOn(component, 'getDuplicateRecord').and.callThrough();
       component.ngOnInit();
       expect(component.getDuplicateRecord).toHaveBeenCalled();

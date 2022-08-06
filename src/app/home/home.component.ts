@@ -26,21 +26,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   public records: AccountSData[] = [];
   title = APPTITLE;
   duplicateReferenceIDs: String[] = [];
-
+  recordsEventSubscription: any;
   constructor(
     private homeService: HomeService,
     private modalPopService: ModalService
   ) {}
   ngOnInit(): void {
-    this.homeService.recordSubject.subscribe((data: any) => {
-      if (data.status === RECORDS_EVENT.RESET) {
-        this.fileReset();
+    this.recordsEventSubscription = this.homeService.recordSubject.subscribe(
+      (data: any) => {
+        if (data.status === RECORDS_EVENT.RESET) {
+          this.fileReset();
+        }
+        if (data.status === RECORDS_EVENT.INITIATE_RECORDS) {
+          this.records = data.records;
+          this.getDuplicateRecord(data.records);
+        }
       }
-      if (data.status === RECORDS_EVENT.INITIATE_RECORDS) {
-        this.records = data.records;
-        this.getDuplicateRecord(data.records);
-      }
-    });
+    );
   }
 
   getDuplicateRecord(records: AccountSData[]) {
@@ -80,6 +82,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.duplicateReferenceIDs = [];
   }
   ngOnDestroy() {
-    this.homeService.recordSubject.unsubscribe();
+    this.recordsEventSubscription?.unsubscribe();
   }
 }
