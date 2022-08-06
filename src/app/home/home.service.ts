@@ -44,11 +44,11 @@ export class HomeService {
     });
   }
 
-  checkRecordsDataFromFile(format: String, fileData: any) {
-    if (this.isValidCSVFile(format)) {
+  checkRecordsDataFromFile(file: any, fileData: any) {
+    if (this.isValidCSVFile(file)) {
       this.getDataRecordsArrayFromCSVFile(fileData);
     }
-    if (this.isValidXMLFile(format)) {
+    if (this.isValidXMLFile(file)) {
       this.getDataRecordsArrayFromXMLFile(fileData);
     }
   }

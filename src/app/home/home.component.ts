@@ -49,13 +49,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       .filter((refId, index, allRefIds) => {
         return allRefIds.indexOf(refId) !== index;
       });
-    console.log(this.duplicateReferenceIDs);
   }
   uploadListener($event: any): void {
     let files = $event.srcElement.files;
-    let input = $event.target;
     let reader = new FileReader();
-    reader.readAsText(input.files[0]);
+    reader.readAsText(files[0]);
     if (
       this.homeService.isValidCSVFile(files[0]) ||
       this.homeService.isValidXMLFile(files[0])

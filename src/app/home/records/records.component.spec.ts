@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AccountSData } from '../home.component';
 import { RecordsComponent } from './records.component';
+import { TAB_TITLE } from '../home.constants';
 
 describe('RecordsComponent', () => {
   let component: RecordsComponent;
@@ -33,6 +34,15 @@ describe('RecordsComponent', () => {
   });
 
   it(`tabs has default value`, () => {
-    expect(component.tabs).toEqual([]);
+    expect(component.tabs).toEqual([
+      {
+        title: TAB_TITLE.SUCCESS,
+        active: true
+      },
+      {
+        title: TAB_TITLE.FAILURE,
+        active: false
+      }
+    ]);
   });
 });
