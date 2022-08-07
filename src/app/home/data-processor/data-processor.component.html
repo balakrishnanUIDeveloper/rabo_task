@@ -6,18 +6,18 @@
         type="file"
         #csvReader
         name="Upload CSV or XML"
-        id="txtFileUpload"
+        id="fileUpload"
         (change)="uploadListener($event)"
         accept=".csv, .xml"
       />
+      <button
+        type="button"
+        *ngIf="records.length > 0"
+        (click)="fileReset()"
+        class="btn btn-secondary"
+      >
+        {{ resetBtnLabel }}
+      </button>
     </div>
   </div>
-  <button
-    type="button"
-    *ngIf="records.length > 0"
-    (click)="fileReset()"
-    class="btn btn-primary mb-3 mt-2"
-  >
-    Reset
-  </button>
 </ng-container>

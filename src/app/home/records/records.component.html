@@ -3,7 +3,7 @@
     <ul class="nav nav-tabs nav-fill">
       <li class="nav-item" *ngFor="let tab of tabs" (click)="selectTab(tab)">
         <a
-          class="nav-link"
+          class="nav-link text-secondary"
           [class.active]="tab.active"
           href="javascript:void(0)"
         >
@@ -12,9 +12,9 @@
       </li>
     </ul>
   </div>
-  <div class="col-md-12">
+  <div class="col-md-12 mt-2">
     <table class="table table-striped">
-      <thead class="thead-dark">
+      <thead class="thead-dark text-capitalize">
         <tr>
           <th scope="col">reference</th>
           <th scope="col">accountNumber</th>

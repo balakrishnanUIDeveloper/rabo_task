@@ -10,13 +10,15 @@ export class HomeService {
   recordSubject = new Subject();
 
   getDataRecordsArrayFromCSVFile(csvData: any) {
-    let csvRecordsArray = csvData?.toString().split(/\r\n|\n/);
+    // CSV to json dara
+    let csvRecordsArray = csvData?.toString().split(/\r\n|\n/); //split string into array of individual data
     let headerLength = this.getHeaderArray(csvRecordsArray).length;
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = csvRecordsArray[i].split(',');
       if (curruntRecord.length == headerLength) {
+        // check if no of headers and no of records are same and assign them to it
         let csvRecord: any = {};
         csvRecord.reference = curruntRecord[0].trim();
         csvRecord.accountNumber = curruntRecord[1].trim();
@@ -30,7 +32,8 @@ export class HomeService {
     this.populateRecords(csvArr);
   }
 
-  getDataRecordsArrayFromXMLFile(xmlData: any) {
+  async getDataRecordsArrayFromXMLFile(xmlData: any) {
+    // XML data to json data
     const parser = new xml2js.Parser({
       trim: true,
       explicitArray: false,
@@ -38,9 +41,8 @@ export class HomeService {
       attrNameProcessors: [this.camelize],
       tagNameProcessors: [this.camelize]
     });
-    parser.parseString(xmlData, (err, result) => {
-      this.populateRecords(result?.records?.record);
-    });
+    let recordsData = await parser.parseStringPromise(xmlData);
+    this.populateRecords(recordsData?.records?.record);
   }
 
   checkRecordsDataFromFile(file: any, fileData: any) {
@@ -52,6 +54,7 @@ export class HomeService {
     }
   }
   getHeaderArray(csvRecordsArr: any) {
+    // get records headers
     let headers = csvRecordsArr[0].split(',');
     let headerArray = [];
     for (let j = 0; j < headers.length; j++) {

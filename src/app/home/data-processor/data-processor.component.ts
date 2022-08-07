@@ -6,7 +6,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { AccountSData } from '../home.component';
-import { PROCESSOR_TITLE, RECORDS_EVENT } from '../home.constants';
+import { PROCESSOR_TITLE, RECORDS_EVENT, RESET_BTN } from '../home.constants';
 import { HomeService } from '../home.service';
 @Component({
   selector: 'app-data-processor',
@@ -16,9 +16,9 @@ export class DataProcessorComponent {
   @Input() records: AccountSData[] = [];
   @Output() uploadFileEvent = new EventEmitter<string>();
   @ViewChild('csvReader') csvReader: any;
-
-  constructor(private homeService: HomeService) {}
+  resetBtnLabel = RESET_BTN;
   title = PROCESSOR_TITLE;
+  constructor(private homeService: HomeService) {}
   uploadListener($event: any): void {
     this.uploadFileEvent.emit($event);
   }
