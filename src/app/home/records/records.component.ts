@@ -11,6 +11,7 @@ export class RecordsComponent {
   @Input() records: AccountSData[] = [];
   @Input() duplicateReferenceIDs: String[] = [];
   showSuccessRecords: Boolean = true;
+  transactionLabel: String = TAB_TITLE.TRANSACTION;
   tabs = [
     {
       title: TAB_TITLE.SUCCESS,

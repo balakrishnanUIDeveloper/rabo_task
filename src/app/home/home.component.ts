@@ -6,9 +6,9 @@ import {
   OnDestroy
 } from '@angular/core';
 import { ModalService } from '../shared/modal/modal.service';
-import { APPTITLE, RECORDS_EVENT } from './home.constants';
+import { APPTITLE, NO_RECORDS, RECORDS_EVENT } from './home.constants';
 import { HomeService } from './home.service';
-
+import { environment } from '../../environments/environment';
 export type AccountSData = {
   reference: String;
   accountNumber: String;
@@ -24,7 +24,9 @@ export type AccountSData = {
 })
 export class HomeComponent implements OnInit, OnDestroy {
   public records: AccountSData[] = [];
-  title = APPTITLE;
+  title = environment.app_title;
+  noRecords_title: String = NO_RECORDS.title;
+  noRecords_subTitle: String = NO_RECORDS.subTitle;
   duplicateReferenceIDs: String[] = [];
   recordsEventSubscription: any;
   constructor(

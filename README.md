@@ -2,13 +2,21 @@
 
 ### Assignment ###
 
-* Quick summary
+* Task summary
 
   Rabobank receives monthly deliveries of customer statement records. This information is delivered in two formats, CSV and XML. These records need to be validated. based on below conditions
   
      * all transaction references should be unique
      * end balance needs to be validated 
      * Return both the transaction reference and description of each of the failed records
+
+## Implementation
+
+* Responsive Design - used Bootstrap 4.2
+* upload .csv or .xml file to the input.
+* transactions are shown in two tabs, Success and Failure.
+* Failure transactions include records with duplicate reference and invalid endbalance.
+* Duplicate transaction reference ID's are shown in red colour.
 
 ## Development server
 

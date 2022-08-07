@@ -20,10 +20,9 @@
         *ngIf="records.length > 0; else noRecords"
       ></app-records>
       <ng-template #noRecords>
-        <h5 class="text-center">No records to show right now</h5>
+        <h5 class="text-center">{{ noRecords_title }}</h5>
         <p class="text-center">
-          please upload a csv or xml file to check failed and successfull
-          transactions
+          {{ noRecords_subTitle }}
         </p>
       </ng-template>
     </div>

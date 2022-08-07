@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "fedEx_task": {
+        "rabo_task": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -67,10 +67,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "fedEx_task:build:production"
+                            "browserTarget": "rabo_task:build:production"
                         },
                         "development": {
-                            "browserTarget": "fedEx_task:build:development"
+                            "browserTarget": "rabo_task:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "fedEx_task:build"
+                        "browserTarget": "rabo_task:build"
                     }
                 },
                 "test": {

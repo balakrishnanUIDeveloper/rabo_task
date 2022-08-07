@@ -2,11 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ModalService } from '../shared/modal/modal.service';
 import { HomeService } from './home.service';
-import { APPTITLE, RECORDS_EVENT, SUPPORTED_FILE } from './home.constants';
+import {
+  APPTITLE,
+  NO_RECORDS,
+  RECORDS_EVENT,
+  SUPPORTED_FILE
+} from './home.constants';
 import { AccountSData, HomeComponent } from './home.component';
 import { DataProcessorComponent } from './data-processor/data-processor.component';
 import { By } from '@angular/platform-browser';
 import { fakeFileForTest } from '../core/helper/test.helper';
+import { environment } from 'src/environments/environment';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -69,7 +75,13 @@ describe('HomeComponent', () => {
   });
 
   it(`title has default value`, () => {
-    expect(component.title).toEqual(APPTITLE);
+    expect(component.title).toEqual(environment.app_title);
+  });
+  it(`noRecords_subTitle has default value`, () => {
+    expect(component.noRecords_subTitle).toEqual(NO_RECORDS.subTitle);
+  });
+  it(`noRecords_subTitle has default value`, () => {
+    expect(component.noRecords_title).toEqual(NO_RECORDS.title);
   });
 
   describe('ngOnInit', () => {
@@ -86,15 +98,6 @@ describe('HomeComponent', () => {
       expect(component.getDuplicateRecord).toHaveBeenCalled();
       expect(component.duplicateReferenceIDs.length).toBeGreaterThan(0);
     });
-    // it('check if records are reset', () => {
-    //   let homeServiceStub = fixture.debugElement.injector.get(HomeService);
-    //   // homeServiceStub.recordSubject = { subscribe: (f:any) => f({status: RECORDS_EVENT.RESET}), unsubscribe: () => ({}) },
-    //   // spyOn(homeServiceStub, 'recordSubject').and.callThrough();
-    //   spyOn(component, 'getDuplicateRecord').and.callThrough();
-    //   component.ngOnInit();
-    //   // expect(component.fileReset).toHaveBeenCalled();
-    //   expect(component.getDuplicateRecord).toHaveBeenCalled();
-    // });
   });
   describe('Upload File event', () => {
     let dataProcessor: DataProcessorComponent;

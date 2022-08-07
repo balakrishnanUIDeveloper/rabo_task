@@ -20,4 +20,14 @@ describe('HeaderComponent', () => {
   it('can load instance', () => {
     expect(component).toBeTruthy();
   });
+
+  it(`showHeader has default value`, () => {
+    expect(component.showHeader).toEqual(false);
+  });
+  it('should show headers when toggle header button is clicked', () => {
+    const resetBtnEl = fixture.nativeElement.querySelector('button');
+    resetBtnEl.dispatchEvent(new Event('click'));
+    fixture.detectChanges();
+    expect(component.showHeader).toEqual(true);
+  });
 });

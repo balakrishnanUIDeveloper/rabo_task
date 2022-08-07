@@ -16,8 +16,13 @@ export const SUPPORTED_FILE = {
 export const APPTITLE = 'Rabobank Customer Statement Processor';
 export const PROCESSOR_TITLE = 'Upload CSV / XML to read';
 export const RESET_BTN = 'Reset';
-
+export const NO_RECORDS = {
+  title: 'No records to show right now',
+  subTitle:
+    ' please upload a csv or xml file to check failed and successful transactions'
+};
 export const TAB_TITLE = {
+  TRANSACTION: 'Transactions',
   SUCCESS: 'Success',
   FAILURE: 'Failure'
 };

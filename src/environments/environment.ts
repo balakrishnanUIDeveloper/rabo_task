@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ENDPOINT_BASE: 'https://demo-api.vercel.app'
+  app_title: 'Development of Rabobank Customer Statement Processor'
 };
 
 /*
