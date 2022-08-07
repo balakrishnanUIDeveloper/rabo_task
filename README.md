@@ -10,14 +10,6 @@
      * end balance needs to be validated 
      * Return both the transaction reference and description of each of the failed records
 
-## Code quality
-
- * SonarQube scan: 
-
-## Scope for betterment
-
-* JenkinsFile for CI/ CD pipeline.
-
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
@@ -34,5 +26,11 @@ Run `npm run prod` to run the production ready code. please run it only after ru
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Further help
-created by Balakrishnan 
+## Creator
+
+Balakrishnan 
+
+## Scope for betterment
+
+* JenkinsFile for CI/ CD pipeline.
+* SonarQube setup
