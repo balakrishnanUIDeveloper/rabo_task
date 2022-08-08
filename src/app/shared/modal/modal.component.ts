@@ -10,15 +10,15 @@ import { ModalService } from './modal.service';
 })
 export class ModalComponent implements OnInit, OnDestroy {
   modalContent: String = ERROR_MSG.SOMETHING_WRONG;
-  @ViewChild('msgModal') msgModal: any;
   modalEventSubscription: any;
+  @ViewChild('msgModal') msgModal: any;
   constructor(
-    private modalService: NgbModal,
-    private modalpopService: ModalService
+    private _modalService: NgbModal,
+    private _modalpopService: ModalService
   ) {}
   ngOnInit() {
     this.modalEventSubscription =
-      this.modalpopService.modalPopupSubject.subscribe((data: any) => {
+      this._modalpopService.modalPopupSubject.subscribe((data: any) => {
         if (data.status === RECORDS_EVENT.UPLOAD_ERROR) {
           this.modalContent = ERROR_MSG.UPLOAD_ERROR;
         } else if (data.status === RECORDS_EVENT.INVALID_FILE_ERROR) {
@@ -28,7 +28,7 @@ export class ModalComponent implements OnInit, OnDestroy {
       });
   }
   open(msgModal: any) {
-    this.modalService.open(msgModal);
+    this._modalService.open(msgModal);
   }
   ngOnDestroy(): void {
     this.modalEventSubscription?.unsubscribe();

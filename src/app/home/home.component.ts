@@ -23,18 +23,18 @@ export type AccountSData = {
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public records: AccountSData[] = [];
+  records: AccountSData[] = [];
   title = environment.app_title;
   noRecords_title: String = NO_RECORDS.title;
   noRecords_subTitle: String = NO_RECORDS.subTitle;
   duplicateReferenceIDs: String[] = [];
   recordsEventSubscription: any;
   constructor(
-    private homeService: HomeService,
-    private modalPopService: ModalService
+    private _homeService: HomeService,
+    private _modalPopService: ModalService
   ) {}
   ngOnInit(): void {
-    this.recordsEventSubscription = this.homeService.recordSubject.subscribe(
+    this.recordsEventSubscription = this._homeService.recordSubject.subscribe(
       (data: any) => {
         if (data.status === RECORDS_EVENT.RESET) {
           this.fileReset();
@@ -59,20 +59,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     let reader = new FileReader();
     reader.readAsText(files[0]);
     if (
-      this.homeService.isValidCSVFile(files[0]) ||
-      this.homeService.isValidXMLFile(files[0])
+      this._homeService.isValidCSVFile(files[0]) ||
+      this._homeService.isValidXMLFile(files[0])
     ) {
       let instance = this;
       reader.onload = () => {
-        this.homeService.checkRecordsDataFromFile(files[0], reader.result);
+        this._homeService.checkRecordsDataFromFile(files[0], reader.result);
       };
       reader.onerror = function () {
-        instance.modalPopService.modalPopupSubject.next({
+        instance._modalPopService.modalPopupSubject.next({
           status: RECORDS_EVENT.UPLOAD_ERROR
         });
       };
     } else {
-      this.modalPopService.modalPopupSubject.next({
+      this._modalPopService.modalPopupSubject.next({
         status: RECORDS_EVENT.INVALID_FILE_ERROR
       });
       this.fileReset();
