@@ -6,7 +6,8 @@
         "start": "ng serve",
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
-        "test": "ng test",
+        "test": "ng test --no-watch --code-coverage",
+        "test:watch": "ng test",
         "lint": "npx eslint \"./src/**/*.{js,jsx,ts,tsx,html}\" --fix",
         "format": "npx prettier \"src/**/*.{js,jsx,ts,tsx,html,css,scss}\" --write",
         "prod": "http-server ./dist"
